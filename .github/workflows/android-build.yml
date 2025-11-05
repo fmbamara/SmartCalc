@@ -1,4 +1,20 @@
-- name: List all APK files
-  run: |
-    echo "Searching for APK files..."
-    find . -type f -name "*.apk"
+      - name: Build APKs
+        run: ./gradlew assembleDebug assembleRelease --stacktrace
+
+      - name: List all APK files
+        run: |
+          echo "APK files found:"
+          find . -type f -name "*.apk"
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload Release APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
