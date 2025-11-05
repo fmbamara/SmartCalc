@@ -10,8 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      path: ${{ runner.tool_cache }}/android-sdk
-
+      ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/android-sdk
     steps:
     - name: Checkout
       uses: actions/checkout@v4
