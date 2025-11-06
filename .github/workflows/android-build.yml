@@ -28,17 +28,11 @@ jobs:
 
     - name: Build Debug and Release APKs
       run: |
-        bash gradlew assembleDebug
-        bash gradlew assembleRelease
+        bash ./gradlew :app:assembleDebug
+        bash ./gradlew :app:assembleRelease
 
-    - name: Upload Debug APK
+    - name: Upload APKs
       uses: actions/upload-artifact@v4
       with:
-        name: SmartCalc-Debug-APK
-        path: app/build/outputs/apk/debug/*.apk
-
-    - name: Upload Release APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: SmartCalc-Release-APK
-        path: app/build/outputs/apk/release/*.apk
+        name: SmartCalc-APKs
+        path: app/build/outputs/apk/**/*.apk
