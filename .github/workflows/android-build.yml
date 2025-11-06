@@ -20,10 +20,11 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permissions
+    - name: Grant permissions for Gradle wrapper
       run: |
         chmod +x gradlew
         chmod +r gradle/wrapper/gradle-wrapper.jar
+        chmod +x gradle/wrapper/gradle-wrapper.jar
 
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug
