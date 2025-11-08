@@ -1,4 +1,4 @@
-# 🧰 Install Android SDK manually (fixed permissions)
+Install Android SDK manually (fixed permissions)
       - name: Install Android SDK
         run: |
           sudo apt-get update
