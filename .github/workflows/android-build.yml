@@ -24,7 +24,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # 🧰 Install Android SDK manually (safe, works on GitHub runners)
+      # 🧰 Install Android SDK manually (safe)
       - name: Install Android SDK
         run: |
           sudo apt-get update
@@ -45,28 +45,28 @@ jobs:
           echo "$HOME/android-sdk/platform-tools" >> $GITHUB_PATH
           echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
 
-          # Accept licenses and install packages
+          # Accept licenses and install SDK packages
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;33.0.2" "platforms;android-33"
 
-      # 🔑 Grant Gradlew permissions
+      # 🔑 Grant Gradle wrapper permissions
       - name: Grant Gradle wrapper permissions
-        working-directory: SmartCalc
+        working-directory: ./SmartCalc   # root folder containing gradlew
         run: chmod +x ./gradlew
 
       # 🧹 Clean project
       - name: Clean project
-        working-directory: SmartCalc
+        working-directory: ./SmartCalc
         run: ./gradlew clean
 
       # 🏗️ Build Debug APK
       - name: Build Debug APK
-        working-directory: SmartCalc
+        working-directory: ./SmartCalc
         run: ./gradlew assembleDebug
 
       # 🏗️ Build Release APK
       - name: Build Release APK
-        working-directory: SmartCalc
+        working-directory: ./SmartCalc
         run: ./gradlew assembleRelease
 
       # 📤 Upload APKs as artifacts
