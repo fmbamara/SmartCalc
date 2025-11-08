@@ -24,16 +24,21 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # 📦 Install Android SDK (use stable SDK 33)
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          cmdline-tools-version: 12.0
-          accept-android-sdk-licenses: true
-          packages: |
-            platforms;android-33
-            build-tools;33.0.2
-            platform-tools
+      # 🧰 Install Android SDK manually
+      - name: Install Android SDK
+        run: |
+          sudo mkdir -p /usr/local/lib/android/sdk
+          cd /usr/local/lib/android
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+          unzip cmdline-tools.zip
+          sudo mkdir -p sdk/cmdline-tools
+          sudo mv cmdline-tools sdk/cmdline-tools/latest
+          export ANDROID_HOME=/usr/local/lib/android/sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+          yes | sdkmanager --licenses
+          yes | sdkmanager "platform-tools" "build-tools;33.0.2" "platforms;android-33"
 
       # 🔑 Grant Gradlew permissions
       - name: Grant Gradle wrapper permissions
