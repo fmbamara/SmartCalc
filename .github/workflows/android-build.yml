@@ -24,7 +24,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # 🧰 Install Android SDK manually (safe)
+      # 🧰 Install Android SDK manually
       - name: Install Android SDK
         run: |
           sudo apt-get update
@@ -49,7 +49,7 @@ jobs:
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;33.0.2" "platforms;android-33"
 
-      # 🔧 Fix Gradle wrapper permissions and line endings
+      # 🔧 Fix Gradle wrapper permissions
       - name: Fix Gradle wrapper permissions
         run: |
           sudo apt-get install -y dos2unix
@@ -69,11 +69,9 @@ jobs:
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
-      # 📤 Upload APKs as artifacts
+      # 📤 Upload APKs as artifacts (works for any module)
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
           name: SmartCalc-APKs
-          path: |
-            app/build/outputs/apk/debug/*.apk
-            app/build/outputs/apk/release/*.apk
+          path: '**/build/outputs/apk/**/*.apk'
