@@ -49,9 +49,13 @@ jobs:
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;33.0.2" "platforms;android-33"
 
-      # 🔑 Grant Gradle wrapper permissions
-      - name: Grant Gradle wrapper permissions
-        run: chmod +x ./gradlew
+      # 🔧 Fix Gradle wrapper permissions and line endings
+      - name: Fix Gradle wrapper permissions
+        run: |
+          sudo apt-get install -y dos2unix
+          dos2unix ./gradlew
+          chmod +x ./gradlew
+          chmod +rx ./gradle/wrapper/gradle-wrapper.jar
 
       # 🧹 Clean project
       - name: Clean project
