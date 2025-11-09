@@ -69,7 +69,11 @@ jobs:
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
-      # 📤 Upload APKs as artifacts (works for any module)
+      # 🔍 Debug: list all generated APKs
+      - name: List generated APKs
+        run: find . -type f -name "*.apk"
+
+      # 📤 Upload all APKs (works for any module)
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
