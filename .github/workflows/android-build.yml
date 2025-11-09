@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 🧩 Checkout the repository
+      # 🧩 Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -70,12 +70,14 @@ jobs:
         run: ./gradlew assembleRelease
 
       # 🔍 Debug: list all generated APKs
-      - name: List generated APKs
-        run: find . -type f -name "*.apk"
+      - name: List all APKs
+        run: find ./build/outputs/apk -type f -name "*.apk"
 
-      # 📤 Upload all APKs (works for any module)
+      # 📤 Upload APKs from root module
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
           name: SmartCalc-APKs
-          path: '**/build/outputs/apk/**/*.apk'
+          path: |
+            build/outputs/apk/debug/*.apk
+            build/outputs/apk/release/*.apk
